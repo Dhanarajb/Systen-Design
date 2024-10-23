@@ -25,7 +25,31 @@ If a hacker hijacks a session, they can:
 ### Hijacking situation:
 - Bob, a hacker, is on the same public Wi-Fi as Alice (like in a coffee shop). Since the shopping website isn’t using HTTPS, Bob uses a tool to "listen in" on the network and steals Alice’s session cookie.
 - With Alice’s session cookie, Bob now logs into the website as Alice without needing her password. He can now see Alice’s personal information and even make purchases from her account.
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Example</title>
+</head>
+<body>
 
+<!-- Vulnerable Code -->
+<div>
+   Welcome, <span id="username"></span>!
+</div>
+
+<script>
+   const params = new URLSearchParams(window.location.search);
+   const name = params.get('name');
+   document.getElementById('username').innerHTML = name;
+</script>
+
+</body>
+</html>
+```
 ## How to prevent Session Hijacking:
 
 1. **Use HTTPS**: Always use secure connections (HTTPS) so hackers can’t "listen in" and steal session cookies.
